@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>✦ AIR DRAW</title>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.17.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection@2.0.1/dist/hand-pose-detection.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600&display=swap');
+:root{--neon:#00fff7;--pink:#ff2d78;--bg:#050510;--panel:rgba(8,8,28,0.93);--border:rgba(0,255,247,0.2);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);font-family:'Rajdhani',sans-serif;overflow:hidden;width:100vw;height:100vh;touch-action:none;user-select:none;color:#e0e0ff;}
+#stack{position:fixed;inset:0;}
+#vidCanvas,#drawCanvas{position:absolute;inset:0;width:100%;height:100%;}
+#vidCanvas{opacity:0.15;}
+#drawCanvas{z-index:2;}
+#bar{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:9px 14px;background:var(--panel);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);}
+#logo{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:900;letter-spacing:3px;color:var(--neon);text-shadow:0 0 12px var(--neon);flex-shrink:0;}
+.sep{width:1px;height:26px;background:var(--border);flex-shrink:0;}
+.lbl{font-size:9px;font-weight:600;letter-spacing:2px;color:rgba(0,255,247,0.5);text-transform:uppercase;}
+#swatches{display:flex;gap:5px;align-items:center;}
+.sw{width:20px;height:20px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .15s,border-color .15s;flex-shrink:0;}
+.sw:hover,.sw.on{border-color:#fff;transform:scale(1.25);}
+#cpick{width:20px;height:20px;border-radius:50%;border:2px solid rgba(255,255,255,.35);cursor:pointer;padding:0;background:conic-gradient(red,yellow,lime,cyan,blue,magenta,red);appearance:none;-webkit-appearance:none;overflow:hidden;flex-shrink:0;}
+#cpick::-webkit-color-swatch-wrapper{padding:0;border-radius:50%;}
+#cpick::-webkit-color-swatch{border:none;border-radius:50%;}
+#szSlider{-webkit-appearance:none;appearance:none;width:75px;height:3px;border-radius:2px;background:linear-gradient(to right,var(--neon),var(--pink));outline:none;cursor:pointer;}
+#szSlider::-webkit-slider-thumb{-webkit-appearance:none;width:13px;height:13px;border-radius:50%;background:#fff;box-shadow:0 0 6px var(--neon);cursor:pointer;}
+#szVal{font-size:11px;color:rgba(0,255,247,.7);width:18px;text-align:right;}
+.btn{font-family:'Orbitron',sans-serif;font-size:9px;font-weight:700;letter-spacing:1.5px;padding:5px 10px;border-radius:4px;border:1px solid var(--border);background:rgba(0,255,247,.07);color:var(--neon);cursor:pointer;transition:all .2s;text-transform:uppercase;flex-shrink:0;white-space:nowrap;}
+.btn:hover{background:rgba(0,255,247,.18);box-shadow:0 0 12px rgba(0,255,247,.4);}
+.btn.red{color:var(--pink);border-color:rgba(255,45,120,.25);background:rgba(255,45,120,.07);}
+.btn.red:hover{background:rgba(255,45,120,.18);box-shadow:0 0 12px rgba(255,45,120,.4);}
+#pill{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:10;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);border-radius:100px;padding:7px 18px;backdrop-filter:blur(16px);font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;color:var(--neon);text-shadow:0 0 8px var(--neon);white-space:nowrap;transition:color .3s,border-color .3s;}
+#dot{width:7px;height:7px;border-radius:50%;background:var(--neon);box-shadow:0 0 8px var(--neon);animation:blink 1.4s infinite;flex-shrink:0;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
+#guide{position:fixed;right:14px;bottom:58px;z-index:10;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;backdrop-filter:blur(16px);font-size:11px;line-height:2;}
+#guide .gt{font-family:'Orbitron',sans-serif;font-size:8px;letter-spacing:2px;color:rgba(0,255,247,.45);margin-bottom:4px;}
+.gr{display:flex;align-items:center;gap:7px;}
+.gr .gi{font-size:15px;}
+.gr .gd{color:rgba(255,255,255,.65);}
+#load{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .6s;}
+#load.gone{opacity:0;pointer-events:none;}
+#loadTitle{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;letter-spacing:6px;color:var(--neon);text-shadow:0 0 20px var(--neon);}
+#loadSub{font-size:12px;letter-spacing:3px;color:rgba(0,255,247,.5);text-transform:uppercase;text-align:center;padding:0 20px;}
+#loadBar{width:200px;height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
+#loadFill{height:100%;width:0%;background:linear-gradient(to right,var(--neon),var(--pink));border-radius:2px;transition:width .4s;}
+#fCursor{position:fixed;border-radius:50%;pointer-events:none;z-index:20;transform:translate(-50%,-50%);display:none;mix-blend-mode:screen;}
+#mhint{display:none;position:fixed;top:68px;left:50%;transform:translateX(-50%);z-index:10;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:10px;color:rgba(255,255,255,.55);text-align:center;backdrop-filter:blur(16px);white-space:nowrap;}
+@media(max-width:600px){#logo{font-size:11px;letter-spacing:2px;}#guide{display:none;}#mhint{display:block;}#szSlider{width:55px;}.lbl{display:none;}}
+</style>
+</head>
+<body>
+
+<div id="load">
+  <div id="loadTitle">AIR DRAW</div>
+  <div id="loadSub">Loading AI Hand Tracker...</div>
+  <div id="loadBar"><div id="loadFill"></div></div>
+</div>
+
+<div id="bar">
+  <div id="logo">✦ AIR DRAW</div>
+  <div class="sep"></div>
+  <div style="display:flex;align-items:center;gap:7px;">
+    <span class="lbl">Color</span>
+    <div id="swatches">
+      <div class="sw on" data-c="#00fff7" style="background:#00fff7;box-shadow:0 0 7px #00fff7"></div>
+      <div class="sw" data-c="#ff2d78" style="background:#ff2d78;box-shadow:0 0 7px #ff2d78"></div>
+      <div class="sw" data-c="#ffe600" style="background:#ffe600;box-shadow:0 0 7px #ffe600"></div>
+      <div class="sw" data-c="#00ff88" style="background:#00ff88;box-shadow:0 0 7px #00ff88"></div>
+      <div class="sw" data-c="#ff6a00" style="background:#ff6a00;box-shadow:0 0 7px #ff6a00"></div>
+      <div class="sw" data-c="#aa00ff" style="background:#aa00ff;box-shadow:0 0 7px #aa00ff"></div>
+      <div class="sw" data-c="#ffffff" style="background:#fff;box-shadow:0 0 7px #fff"></div>
+      <input type="color" id="cpick" value="#00fff7" title="Custom">
+    </div>
+  </div>
+  <div class="sep"></div>
+  <div style="display:flex;align-items:center;gap:7px;">
+    <span class="lbl">Size</span>
+    <input type="range" id="szSlider" min="2" max="40" value="8">
+    <span id="szVal">8</span>
+  </div>
+  <div class="sep"></div>
+  <button class="btn red" id="clearBtn">✕ Clear</button>
+  <button class="btn" id="saveBtn">↓ Save</button>
+</div>
+
+<div id="mhint">☝ Index = Draw &nbsp;|&nbsp; 🖐 Palm = Erase &nbsp;|&nbsp; ✊ Fist = Pause</div>
+
+<div id="stack">
+  <canvas id="vidCanvas"></canvas>
+  <canvas id="drawCanvas"></canvas>
+</div>
+
+<div id="fCursor"></div>
+
+<div id="pill"><div id="dot"></div><span id="pillTxt">STARTING...</span></div>
+
+<div id="guide">
+  <div class="gt">✦ Gestures</div>
+  <div class="gr"><span class="gi">☝️</span><span class="gd">Index finger = Draw</span></div>
+  <div class="gr"><span class="gi">🖐️</span><span class="gd">Open palm = Erase</span></div>
+  <div class="gr"><span class="gi">✊</span><span class="gd">Fist = Pause</span></div>
+</div>
+
+<script>
+let color='#00fff7', sz=8;
+let lastX=null, lastY=null;
+let detector=null;
+
+const dC=document.getElementById('drawCanvas');
+const vC=document.getElementById('vidCanvas');
+const dCtx=dC.getContext('2d');
+const vCtx=vC.getContext('2d');
+const fCur=document.getElementById('fCursor');
+const pillTxt=document.getElementById('pillTxt');
+const dot=document.getElementById('dot');
+const pill=document.getElementById('pill');
+const loadFill=document.getElementById('loadFill');
+
+function resize(){dC.width=vC.width=window.innerWidth;dC.height=vC.height=window.innerHeight;}
+resize(); window.addEventListener('resize',resize);
+
+function setSt(t,c='#00fff7'){
+  pillTxt.textContent=t;
+  dot.style.background=c; dot.style.boxShadow=`0 0 8px ${c}`;
+  pill.style.color=c; pill.style.borderColor=c+'44';
+}
+function prog(p){loadFill.style.width=p+'%';}
+
+// Controls
+document.querySelectorAll('.sw').forEach(sw=>{
+  sw.addEventListener('click',()=>{
+    color=sw.dataset.c;
+    document.querySelectorAll('.sw').forEach(s=>s.classList.remove('on'));
+    sw.classList.add('on');
+  });
+});
+document.getElementById('cpick').addEventListener('input',e=>{
+  color=e.target.value;
+  document.querySelectorAll('.sw').forEach(s=>s.classList.remove('on'));
+});
+const szS=document.getElementById('szSlider');
+szS.addEventListener('input',()=>{sz=+szS.value;document.getElementById('szVal').textContent=sz;});
+document.getElementById('clearBtn').addEventListener('click',()=>dCtx.clearRect(0,0,dC.width,dC.height));
+document.getElementById('saveBtn').addEventListener('click',()=>{
+  const m=document.createElement('canvas');
+  m.width=dC.width; m.height=dC.height;
+  const mCtx=m.getContext('2d');
+  mCtx.fillStyle='#050510'; mCtx.fillRect(0,0,m.width,m.height);
+  mCtx.drawImage(dC,0,0);
+  const a=document.createElement('a');
+  a.download='airdraw-'+Date.now()+'.png'; a.href=m.toDataURL('image/png'); a.click();
+});
+
+// Draw
+function drawGlow(x1,y1,x2,y2,col,s){
+  dCtx.save(); dCtx.lineCap='round'; dCtx.lineJoin='round';
+  [[s*8,.06],[s*4,.12],[s*2,.25]].forEach(([b,a])=>{
+    dCtx.beginPath(); dCtx.strokeStyle=col; dCtx.lineWidth=s+b;
+    dCtx.globalAlpha=a; dCtx.shadowColor=col; dCtx.shadowBlur=b;
+    dCtx.moveTo(x1,y1); dCtx.lineTo(x2,y2); dCtx.stroke();
+  });
+  dCtx.beginPath(); dCtx.strokeStyle='#fff'; dCtx.lineWidth=s*.35;
+  dCtx.globalAlpha=.9; dCtx.shadowColor=col; dCtx.shadowBlur=s*2;
+  dCtx.moveTo(x1,y1); dCtx.lineTo(x2,y2); dCtx.stroke();
+  dCtx.beginPath(); dCtx.strokeStyle=col; dCtx.lineWidth=s;
+  dCtx.globalAlpha=.85; dCtx.shadowColor=col; dCtx.shadowBlur=s*3;
+  dCtx.moveTo(x1,y1); dCtx.lineTo(x2,y2); dCtx.stroke();
+  dCtx.restore();
+}
+function erase(x,y){
+  dCtx.save(); dCtx.globalCompositeOperation='destination-out';
+  dCtx.beginPath(); dCtx.arc(x,y,55,0,Math.PI*2);
+  dCtx.fillStyle='rgba(0,0,0,1)'; dCtx.fill(); dCtx.restore();
+}
+function showCur(x,y,c){
+  fCur.style.display='block'; fCur.style.left=x+'px'; fCur.style.top=y+'px';
+  fCur.style.width=fCur.style.height=sz+'px'; fCur.style.background=c;
+  fCur.style.boxShadow=`0 0 ${sz*2}px ${c},0 0 ${sz*5}px ${c}55`;
+}
+
+// Gesture
+function getGesture(kps){
+  const g=n=>kps.find(k=>k.name===n);
+  const ext=(tip,pip)=>tip&&pip&&tip.y<pip.y-10;
+  const iE=ext(g('index_finger_tip'),g('index_finger_pip'));
+  const mE=ext(g('middle_finger_tip'),g('middle_finger_pip'));
+  const rE=ext(g('ring_finger_tip'),g('ring_finger_pip'));
+  const pE=ext(g('pinky_finger_tip'),g('pinky_finger_pip'));
+  const cnt=[iE,mE,rE,pE].filter(Boolean).length;
+  if(cnt===0) return 'FIST';
+  if(cnt>=3) return 'PALM';
+  if(iE&&!mE&&!rE&&!pE) return 'DRAW';
+  if(iE&&mE&&!rE&&!pE) return 'DRAW';
+  return 'NONE';
+}
+
+// Detection loop
+async function detect(video){
+  const W=dC.width, H=dC.height;
+  async function loop(){
+    vCtx.save(); vCtx.translate(W,0); vCtx.scale(-1,1);
+    vCtx.drawImage(video,0,0,W,H); vCtx.restore();
+    try{
+      const hands=await detector.estimateHands(video,{flipHorizontal:true});
+      if(!hands||!hands.length){
+        setSt('NO HAND — SHOW YOUR HAND','#ff2d78');
+        fCur.style.display='none'; lastX=null; lastY=null;
+      } else {
+        const kps=hands[0].keypoints;
+        const g=getGesture(kps);
+        const it=kps.find(k=>k.name==='index_finger_tip');
+        const x=it?(it.x/video.videoWidth)*W:W/2;
+        const y=it?(it.y/video.videoHeight)*H:H/2;
+        if(g==='FIST'){
+          setSt('✊  PAUSED','#ffe600'); showCur(x,y,'#ffe600'); lastX=null; lastY=null;
+        } else if(g==='PALM'){
+          setSt('🖐  ERASING','#ff2d78'); showCur(x,y,'#ff2d78'); erase(x,y); lastX=null; lastY=null;
+        } else if(g==='DRAW'){
+          setSt('☝  DRAWING',color); showCur(x,y,color);
+          if(lastX!==null){const d=Math.hypot(x-lastX,y-lastY);if(d<150)drawGlow(lastX,lastY,x,y,color,sz);}
+          lastX=x; lastY=y;
+        } else {
+          setSt('HAND TRACKED','#00ff88'); showCur(x,y,'#888'); lastX=null; lastY=null;
+        }
+      }
+    }catch(e){}
+    requestAnimationFrame(loop);
+  }
+  loop();
+}
+
+// Init
+async function init(){
+  try{
+    prog(10); setSt('LOADING MODEL...');
+    prog(40);
+    detector=await handPoseDetection.createDetector(
+      handPoseDetection.SupportedModels.MediaPipeHands,
+      {runtime:'tfjs', modelType:'lite', maxHands:1}
+    );
+    prog(80);
+    const stream=await navigator.mediaDevices.getUserMedia({
+      video:{facingMode:'user',width:{ideal:640},height:{ideal:480}}
+    });
+    const video=document.createElement('video');
+    video.srcObject=stream; video.setAttribute('playsinline',''); video.play();
+    await new Promise(r=>video.onloadedmetadata=r);
+    prog(100);
+    setTimeout(()=>document.getElementById('load').classList.add('gone'),600);
+    setSt('READY — SHOW YOUR HAND ✋');
+    detect(video);
+  }catch(err){
+    console.error(err);
+    const sub=document.getElementById('loadSub');
+    sub.textContent = err.name==='NotAllowedError'
+      ? '❌ Camera permission denied. Please allow camera & use HTTPS.'
+      : '❌ '+err.message;
+    sub.style.color='#ff2d78';
+  }
+}
+
+// Mouse fallback
+let mD=false,mLX,mLY;
+dC.addEventListener('mousedown',e=>{mD=true;mLX=e.clientX;mLY=e.clientY;});
+dC.addEventListener('mousemove',e=>{if(!mD)return;drawGlow(mLX,mLY,e.clientX,e.clientY,color,sz);mLX=e.clientX;mLY=e.clientY;});
+dC.addEventListener('mouseup',()=>mD=false);
+dC.addEventListener('mouseleave',()=>mD=false);
+
+// Touch fallback
+let tLX=null,tLY=null;
+dC.addEventListener('touchstart',e=>{if(e.touches.length===1){const t=e.touches[0];tLX=t.clientX;tLY=t.clientY;}},{passive:true});
+dC.addEventListener('touchmove',e=>{
+  if(e.touches.length!==1)return;
+  const t=e.touches[0];
+  if(tLX!==null)drawGlow(tLX,tLY,t.clientX,t.clientY,color,sz);
+  tLX=t.clientX;tLY=t.clientY;e.preventDefault();
+},{passive:false});
+dC.addEventListener('touchend',()=>{tLX=null;tLY=null;});
+
+init();
+</script>
+</body>
+</html>
