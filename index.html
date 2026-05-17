@@ -4,17 +4,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>✦ AIR DRAW</title>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.17.0/dist/tf.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/hand-pose-detection@2.0.1/dist/hand-pose-detection.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;600&display=swap');
 :root{--neon:#00fff7;--pink:#ff2d78;--bg:#050510;--panel:rgba(8,8,28,0.93);--border:rgba(0,255,247,0.2);}
 *{margin:0;padding:0;box-sizing:border-box;}
 body{background:var(--bg);font-family:'Rajdhani',sans-serif;overflow:hidden;width:100vw;height:100vh;touch-action:none;user-select:none;color:#e0e0ff;}
-#stack{position:fixed;inset:0;}
-#vidCanvas,#drawCanvas{position:absolute;inset:0;width:100%;height:100%;}
-#vidCanvas{opacity:0.15;}
-#drawCanvas{z-index:2;}
+#drawCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:1;}
 #bar{position:fixed;top:0;left:0;right:0;z-index:10;display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:9px 14px;background:var(--panel);border-bottom:1px solid var(--border);backdrop-filter:blur(20px);}
 #logo{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:900;letter-spacing:3px;color:var(--neon);text-shadow:0 0 12px var(--neon);flex-shrink:0;}
 .sep{width:1px;height:26px;background:var(--border);flex-shrink:0;}
@@ -32,7 +27,7 @@ body{background:var(--bg);font-family:'Rajdhani',sans-serif;overflow:hidden;widt
 .btn:hover{background:rgba(0,255,247,.18);box-shadow:0 0 12px rgba(0,255,247,.4);}
 .btn.red{color:var(--pink);border-color:rgba(255,45,120,.25);background:rgba(255,45,120,.07);}
 .btn.red:hover{background:rgba(255,45,120,.18);box-shadow:0 0 12px rgba(255,45,120,.4);}
-#pill{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:10;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);border-radius:100px;padding:7px 18px;backdrop-filter:blur(16px);font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;color:var(--neon);text-shadow:0 0 8px var(--neon);white-space:nowrap;transition:color .3s,border-color .3s;}
+#pill{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);z-index:10;display:flex;align-items:center;gap:8px;background:var(--panel);border:1px solid var(--border);border-radius:100px;padding:7px 18px;backdrop-filter:blur(16px);font-family:'Orbitron',sans-serif;font-size:10px;letter-spacing:2px;color:var(--neon);white-space:nowrap;transition:color .3s;}
 #dot{width:7px;height:7px;border-radius:50%;background:var(--neon);box-shadow:0 0 8px var(--neon);animation:blink 1.4s infinite;flex-shrink:0;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.4}}
 #guide{position:fixed;right:14px;bottom:58px;z-index:10;background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:10px 14px;backdrop-filter:blur(16px);font-size:11px;line-height:2;}
@@ -40,24 +35,12 @@ body{background:var(--bg);font-family:'Rajdhani',sans-serif;overflow:hidden;widt
 .gr{display:flex;align-items:center;gap:7px;}
 .gr .gi{font-size:15px;}
 .gr .gd{color:rgba(255,255,255,.65);}
-#load{position:fixed;inset:0;z-index:100;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .6s;}
-#load.gone{opacity:0;pointer-events:none;}
-#loadTitle{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;letter-spacing:6px;color:var(--neon);text-shadow:0 0 20px var(--neon);}
-#loadSub{font-size:12px;letter-spacing:3px;color:rgba(0,255,247,.5);text-transform:uppercase;text-align:center;padding:0 20px;}
-#loadBar{width:200px;height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
-#loadFill{height:100%;width:0%;background:linear-gradient(to right,var(--neon),var(--pink));border-radius:2px;transition:width .4s;}
-#fCursor{position:fixed;border-radius:50%;pointer-events:none;z-index:20;transform:translate(-50%,-50%);display:none;mix-blend-mode:screen;}
-#mhint{display:none;position:fixed;top:68px;left:50%;transform:translateX(-50%);z-index:10;background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:7px 14px;font-size:10px;color:rgba(255,255,255,.55);text-align:center;backdrop-filter:blur(16px);white-space:nowrap;}
-@media(max-width:600px){#logo{font-size:11px;letter-spacing:2px;}#guide{display:none;}#mhint{display:block;}#szSlider{width:55px;}.lbl{display:none;}}
+/* Flower overlay canvas */
+#flowerCanvas{position:fixed;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;}
+@media(max-width:600px){#logo{font-size:11px;letter-spacing:2px;}#guide{display:none;}#szSlider{width:55px;}.lbl{display:none;}}
 </style>
 </head>
 <body>
-
-<div id="load">
-  <div id="loadTitle">AIR DRAW</div>
-  <div id="loadSub">Loading AI Hand Tracker...</div>
-  <div id="loadBar"><div id="loadFill"></div></div>
-</div>
 
 <div id="bar">
   <div id="logo">✦ AIR DRAW</div>
@@ -86,78 +69,95 @@ body{background:var(--bg);font-family:'Rajdhani',sans-serif;overflow:hidden;widt
   <button class="btn" id="saveBtn">↓ Save</button>
 </div>
 
-<div id="mhint">☝ Index = Draw &nbsp;|&nbsp; 🖐 Palm = Erase &nbsp;|&nbsp; ✊ Fist = Pause</div>
+<canvas id="drawCanvas"></canvas>
+<canvas id="flowerCanvas"></canvas>
 
-<div id="stack">
-  <canvas id="vidCanvas"></canvas>
-  <canvas id="drawCanvas"></canvas>
-</div>
-
-<div id="fCursor"></div>
-
-<div id="pill"><div id="dot"></div><span id="pillTxt">STARTING...</span></div>
+<div id="pill"><div id="dot"></div><span id="pillTxt">☝ ONE FINGER = DRAW &nbsp;|&nbsp; 🤏 PINCH = FLOWER</span></div>
 
 <div id="guide">
   <div class="gt">✦ Gestures</div>
-  <div class="gr"><span class="gi">☝️</span><span class="gd">Index finger = Draw</span></div>
-  <div class="gr"><span class="gi">🖐️</span><span class="gd">Open palm = Erase</span></div>
-  <div class="gr"><span class="gi">✊</span><span class="gd">Fist = Pause</span></div>
+  <div class="gr"><span class="gi">☝️</span><span class="gd">1 finger = Draw neon trail</span></div>
+  <div class="gr"><span class="gi">🤏</span><span class="gd">Pinch in = Flower blooms</span></div>
+  <div class="gr"><span class="gi">🖐️</span><span class="gd">Pinch out = Flower opens</span></div>
+  <div class="gr"><span class="gi">🖱️</span><span class="gd">Mouse drag = Draw</span></div>
 </div>
 
 <script>
-let color='#00fff7', sz=8;
-let lastX=null, lastY=null;
-let detector=null;
+// ── Canvases ──────────────────────────────────────────────
+const dC  = document.getElementById('drawCanvas');
+const fC  = document.getElementById('flowerCanvas');
+const dCtx = dC.getContext('2d');
+const fCtx = fC.getContext('2d');
 
-const dC=document.getElementById('drawCanvas');
-const vC=document.getElementById('vidCanvas');
-const dCtx=dC.getContext('2d');
-const vCtx=vC.getContext('2d');
-const fCur=document.getElementById('fCursor');
-const pillTxt=document.getElementById('pillTxt');
-const dot=document.getElementById('dot');
-const pill=document.getElementById('pill');
-const loadFill=document.getElementById('loadFill');
-
-function resize(){dC.width=vC.width=window.innerWidth;dC.height=vC.height=window.innerHeight;}
-resize(); window.addEventListener('resize',resize);
-
-function setSt(t,c='#00fff7'){
-  pillTxt.textContent=t;
-  dot.style.background=c; dot.style.boxShadow=`0 0 8px ${c}`;
-  pill.style.color=c; pill.style.borderColor=c+'44';
+function resize(){
+  dC.width = fC.width = window.innerWidth;
+  dC.height = fC.height = window.innerHeight;
 }
-function prog(p){loadFill.style.width=p+'%';}
+resize();
+window.addEventListener('resize', resize);
 
-// Controls
-document.querySelectorAll('.sw').forEach(sw=>{
-  sw.addEventListener('click',()=>{
-    color=sw.dataset.c;
-    document.querySelectorAll('.sw').forEach(s=>s.classList.remove('on'));
+// ── State ─────────────────────────────────────────────────
+let color = '#00fff7', sz = 8;
+let lastX = null, lastY = null;
+const pillTxt = document.getElementById('pillTxt');
+const dot     = document.getElementById('dot');
+const pill    = document.getElementById('pill');
+
+// Flower animation state
+let flowerActive = false;
+let flowerX = 0, flowerY = 0;
+let flowerRadius = 0;      // current petal length (0 = closed, max = open)
+let flowerTargetRadius = 0;
+let flowerPetals = 6;
+let flowerColor = '#ff2d78';
+let flowerColor2 = '#ffe600';
+let flowerRot = 0;
+let flowerAnimId = null;
+
+// ── Status ────────────────────────────────────────────────
+function setSt(t, c='#00fff7'){
+  pillTxt.textContent = t;
+  dot.style.background = c;
+  dot.style.boxShadow = `0 0 8px ${c}`;
+  pill.style.color = c;
+  pill.style.borderColor = c+'44';
+}
+
+// ── Controls ──────────────────────────────────────────────
+document.querySelectorAll('.sw').forEach(sw => {
+  sw.addEventListener('click', () => {
+    color = sw.dataset.c;
+    document.querySelectorAll('.sw').forEach(s => s.classList.remove('on'));
     sw.classList.add('on');
   });
 });
-document.getElementById('cpick').addEventListener('input',e=>{
-  color=e.target.value;
-  document.querySelectorAll('.sw').forEach(s=>s.classList.remove('on'));
+document.getElementById('cpick').addEventListener('input', e => {
+  color = e.target.value;
+  document.querySelectorAll('.sw').forEach(s => s.classList.remove('on'));
 });
-const szS=document.getElementById('szSlider');
-szS.addEventListener('input',()=>{sz=+szS.value;document.getElementById('szVal').textContent=sz;});
-document.getElementById('clearBtn').addEventListener('click',()=>dCtx.clearRect(0,0,dC.width,dC.height));
-document.getElementById('saveBtn').addEventListener('click',()=>{
-  const m=document.createElement('canvas');
-  m.width=dC.width; m.height=dC.height;
-  const mCtx=m.getContext('2d');
-  mCtx.fillStyle='#050510'; mCtx.fillRect(0,0,m.width,m.height);
+const szS = document.getElementById('szSlider');
+szS.addEventListener('input', () => { sz = +szS.value; document.getElementById('szVal').textContent = sz; });
+document.getElementById('clearBtn').addEventListener('click', () => {
+  dCtx.clearRect(0,0,dC.width,dC.height);
+  fCtx.clearRect(0,0,fC.width,fC.height);
+  flowerActive = false;
+});
+document.getElementById('saveBtn').addEventListener('click', () => {
+  const m = document.createElement('canvas');
+  m.width = dC.width; m.height = dC.height;
+  const mCtx = m.getContext('2d');
+  mCtx.fillStyle = '#050510'; mCtx.fillRect(0,0,m.width,m.height);
   mCtx.drawImage(dC,0,0);
-  const a=document.createElement('a');
-  a.download='airdraw-'+Date.now()+'.png'; a.href=m.toDataURL('image/png'); a.click();
+  mCtx.drawImage(fC,0,0);
+  const a = document.createElement('a');
+  a.download = 'airdraw-'+Date.now()+'.png';
+  a.href = m.toDataURL('image/png'); a.click();
 });
 
-// Draw
+// ── Neon Draw ─────────────────────────────────────────────
 function drawGlow(x1,y1,x2,y2,col,s){
   dCtx.save(); dCtx.lineCap='round'; dCtx.lineJoin='round';
-  [[s*8,.06],[s*4,.12],[s*2,.25]].forEach(([b,a])=>{
+  [[s*8,.05],[s*4,.1],[s*2,.22]].forEach(([b,a])=>{
     dCtx.beginPath(); dCtx.strokeStyle=col; dCtx.lineWidth=s+b;
     dCtx.globalAlpha=a; dCtx.shadowColor=col; dCtx.shadowBlur=b;
     dCtx.moveTo(x1,y1); dCtx.lineTo(x2,y2); dCtx.stroke();
@@ -170,117 +170,273 @@ function drawGlow(x1,y1,x2,y2,col,s){
   dCtx.moveTo(x1,y1); dCtx.lineTo(x2,y2); dCtx.stroke();
   dCtx.restore();
 }
-function erase(x,y){
-  dCtx.save(); dCtx.globalCompositeOperation='destination-out';
-  dCtx.beginPath(); dCtx.arc(x,y,55,0,Math.PI*2);
-  dCtx.fillStyle='rgba(0,0,0,1)'; dCtx.fill(); dCtx.restore();
-}
-function showCur(x,y,c){
-  fCur.style.display='block'; fCur.style.left=x+'px'; fCur.style.top=y+'px';
-  fCur.style.width=fCur.style.height=sz+'px'; fCur.style.background=c;
-  fCur.style.boxShadow=`0 0 ${sz*2}px ${c},0 0 ${sz*5}px ${c}55`;
-}
 
-// Gesture
-function getGesture(kps){
-  const g=n=>kps.find(k=>k.name===n);
-  const ext=(tip,pip)=>tip&&pip&&tip.y<pip.y-10;
-  const iE=ext(g('index_finger_tip'),g('index_finger_pip'));
-  const mE=ext(g('middle_finger_tip'),g('middle_finger_pip'));
-  const rE=ext(g('ring_finger_tip'),g('ring_finger_pip'));
-  const pE=ext(g('pinky_finger_tip'),g('pinky_finger_pip'));
-  const cnt=[iE,mE,rE,pE].filter(Boolean).length;
-  if(cnt===0) return 'FIST';
-  if(cnt>=3) return 'PALM';
-  if(iE&&!mE&&!rE&&!pE) return 'DRAW';
-  if(iE&&mE&&!rE&&!pE) return 'DRAW';
-  return 'NONE';
-}
+// ── Flower Draw ───────────────────────────────────────────
+function drawFlower(x, y, r, rot, col1, col2, petals, alpha){
+  if(r < 2) return;
+  fCtx.save();
+  fCtx.globalAlpha = alpha;
+  fCtx.translate(x, y);
+  fCtx.rotate(rot);
 
-// Detection loop
-async function detect(video){
-  const W=dC.width, H=dC.height;
-  async function loop(){
-    vCtx.save(); vCtx.translate(W,0); vCtx.scale(-1,1);
-    vCtx.drawImage(video,0,0,W,H); vCtx.restore();
-    try{
-      const hands=await detector.estimateHands(video,{flipHorizontal:true});
-      if(!hands||!hands.length){
-        setSt('NO HAND — SHOW YOUR HAND','#ff2d78');
-        fCur.style.display='none'; lastX=null; lastY=null;
-      } else {
-        const kps=hands[0].keypoints;
-        const g=getGesture(kps);
-        const it=kps.find(k=>k.name==='index_finger_tip');
-        const x=it?(it.x/video.videoWidth)*W:W/2;
-        const y=it?(it.y/video.videoHeight)*H:H/2;
-        if(g==='FIST'){
-          setSt('✊  PAUSED','#ffe600'); showCur(x,y,'#ffe600'); lastX=null; lastY=null;
-        } else if(g==='PALM'){
-          setSt('🖐  ERASING','#ff2d78'); showCur(x,y,'#ff2d78'); erase(x,y); lastX=null; lastY=null;
-        } else if(g==='DRAW'){
-          setSt('☝  DRAWING',color); showCur(x,y,color);
-          if(lastX!==null){const d=Math.hypot(x-lastX,y-lastY);if(d<150)drawGlow(lastX,lastY,x,y,color,sz);}
-          lastX=x; lastY=y;
-        } else {
-          setSt('HAND TRACKED','#00ff88'); showCur(x,y,'#888'); lastX=null; lastY=null;
-        }
-      }
-    }catch(e){}
-    requestAnimationFrame(loop);
+  // Petals
+  for(let i=0; i<petals; i++){
+    const angle = (Math.PI*2/petals)*i;
+    fCtx.save();
+    fCtx.rotate(angle);
+
+    // Petal shape using bezier
+    const pw = r * 0.42;
+    const pl = r;
+    fCtx.beginPath();
+    fCtx.moveTo(0, 0);
+    fCtx.bezierCurveTo(-pw, pl*0.3, -pw, pl*0.7, 0, pl);
+    fCtx.bezierCurveTo( pw, pl*0.7,  pw, pl*0.3, 0, 0);
+
+    // Gradient fill
+    const grad = fCtx.createLinearGradient(0,0,0,pl);
+    grad.addColorStop(0, col1+'cc');
+    grad.addColorStop(0.5, col2+'aa');
+    grad.addColorStop(1, col1+'44');
+    fCtx.fillStyle = grad;
+    fCtx.shadowColor = col1;
+    fCtx.shadowBlur = 18;
+    fCtx.fill();
+
+    // Petal glow outline
+    fCtx.strokeStyle = col1;
+    fCtx.lineWidth = 1.2;
+    fCtx.globalAlpha = 0.6;
+    fCtx.stroke();
+
+    fCtx.restore();
   }
-  loop();
-}
 
-// Init
-async function init(){
-  try{
-    prog(10); setSt('LOADING MODEL...');
-    prog(40);
-    detector=await handPoseDetection.createDetector(
-      handPoseDetection.SupportedModels.MediaPipeHands,
-      {runtime:'tfjs', modelType:'lite', maxHands:1}
-    );
-    prog(80);
-    const stream=await navigator.mediaDevices.getUserMedia({
-      video:{facingMode:'user',width:{ideal:640},height:{ideal:480}}
-    });
-    const video=document.createElement('video');
-    video.srcObject=stream; video.setAttribute('playsinline',''); video.play();
-    await new Promise(r=>video.onloadedmetadata=r);
-    prog(100);
-    setTimeout(()=>document.getElementById('load').classList.add('gone'),600);
-    setSt('READY — SHOW YOUR HAND ✋');
-    detect(video);
-  }catch(err){
-    console.error(err);
-    const sub=document.getElementById('loadSub');
-    sub.textContent = err.name==='NotAllowedError'
-      ? '❌ Camera permission denied. Please allow camera & use HTTPS.'
-      : '❌ '+err.message;
-    sub.style.color='#ff2d78';
+  // Inner petals (smaller, rotated)
+  for(let i=0; i<petals; i++){
+    const angle = (Math.PI*2/petals)*i + Math.PI/petals;
+    fCtx.save();
+    fCtx.rotate(angle);
+    const pw = r*0.22, pl = r*0.55;
+    fCtx.beginPath();
+    fCtx.moveTo(0,0);
+    fCtx.bezierCurveTo(-pw,pl*0.3,-pw,pl*0.7,0,pl);
+    fCtx.bezierCurveTo(pw,pl*0.7,pw,pl*0.3,0,0);
+    const g2 = fCtx.createLinearGradient(0,0,0,pl);
+    g2.addColorStop(0, col2+'ee');
+    g2.addColorStop(1, col1+'55');
+    fCtx.fillStyle = g2;
+    fCtx.shadowColor = col2;
+    fCtx.shadowBlur = 12;
+    fCtx.globalAlpha = 0.85;
+    fCtx.fill();
+    fCtx.restore();
   }
+
+  // Center circle
+  const cg = fCtx.createRadialGradient(0,0,0,0,0,r*0.18);
+  cg.addColorStop(0,'#fff');
+  cg.addColorStop(0.5, col2);
+  cg.addColorStop(1, col1+'88');
+  fCtx.beginPath();
+  fCtx.arc(0,0,r*0.18,0,Math.PI*2);
+  fCtx.fillStyle = cg;
+  fCtx.shadowColor = '#fff';
+  fCtx.shadowBlur = 20;
+  fCtx.globalAlpha = 1;
+  fCtx.fill();
+
+  // Sparkles around center
+  for(let i=0;i<8;i++){
+    const a = (Math.PI*2/8)*i + rot*2;
+    const sr = r*0.28;
+    const sx = Math.cos(a)*sr, sy = Math.sin(a)*sr;
+    fCtx.beginPath();
+    fCtx.arc(sx,sy,1.5,0,Math.PI*2);
+    fCtx.fillStyle='#fff';
+    fCtx.globalAlpha=0.7;
+    fCtx.shadowColor='#fff';
+    fCtx.shadowBlur=8;
+    fCtx.fill();
+  }
+
+  fCtx.restore();
 }
 
-// Mouse fallback
-let mD=false,mLX,mLY;
-dC.addEventListener('mousedown',e=>{mD=true;mLX=e.clientX;mLY=e.clientY;});
-dC.addEventListener('mousemove',e=>{if(!mD)return;drawGlow(mLX,mLY,e.clientX,e.clientY,color,sz);mLX=e.clientX;mLY=e.clientY;});
-dC.addEventListener('mouseup',()=>mD=false);
-dC.addEventListener('mouseleave',()=>mD=false);
+// ── Flower animation loop ─────────────────────────────────
+let flowerAnimFrame = 0;
+function animateFlower(){
+  // Smooth lerp toward target
+  const speed = 0.12;
+  flowerRadius += (flowerTargetRadius - flowerRadius) * speed;
+  flowerRot += 0.012;
+  flowerAnimFrame++;
 
-// Touch fallback
-let tLX=null,tLY=null;
-dC.addEventListener('touchstart',e=>{if(e.touches.length===1){const t=e.touches[0];tLX=t.clientX;tLY=t.clientY;}},{passive:true});
-dC.addEventListener('touchmove',e=>{
-  if(e.touches.length!==1)return;
-  const t=e.touches[0];
-  if(tLX!==null)drawGlow(tLX,tLY,t.clientX,t.clientY,color,sz);
-  tLX=t.clientX;tLY=t.clientY;e.preventDefault();
-},{passive:false});
-dC.addEventListener('touchend',()=>{tLX=null;tLY=null;});
+  fCtx.clearRect(0,0,fC.width,fC.height);
 
-init();
+  if(flowerRadius > 1){
+    // Glowing aura
+    fCtx.save();
+    const aura = fCtx.createRadialGradient(flowerX,flowerY,0,flowerX,flowerY,flowerRadius*1.4);
+    aura.addColorStop(0, flowerColor+'33');
+    aura.addColorStop(1, 'transparent');
+    fCtx.fillStyle = aura;
+    fCtx.beginPath();
+    fCtx.arc(flowerX,flowerY,flowerRadius*1.4,0,Math.PI*2);
+    fCtx.fill();
+    fCtx.restore();
+
+    drawFlower(flowerX, flowerY, flowerRadius, flowerRot, flowerColor, flowerColor2, flowerPetals, 1);
+  }
+
+  flowerAnimId = requestAnimationFrame(animateFlower);
+}
+
+function startFlowerAnim(){
+  if(!flowerAnimId) flowerAnimId = requestAnimationFrame(animateFlower);
+}
+function stopFlowerAnim(){
+  if(flowerAnimId){ cancelAnimationFrame(flowerAnimId); flowerAnimId=null; }
+  fCtx.clearRect(0,0,fC.width,fC.height);
+}
+
+// ── Pick flower colors from current color ─────────────────
+const flowerPairs = [
+  ['#ff2d78','#ffe600'],['#00fff7','#aa00ff'],['#00ff88','#ffe600'],
+  ['#ff6a00','#ff2d78'],['#aa00ff','#00fff7'],['#ffe600','#ff2d78'],
+  ['#ffffff','#00fff7'],
+];
+let flowerPairIdx = 0;
+
+// ── Touch Handling ────────────────────────────────────────
+let touches = {};
+let prevDist = null;
+let isDrawingTouch = false;
+let touchLastX = null, touchLastY = null;
+let pinchCenterX = 0, pinchCenterY = 0;
+
+function getTouchById(id){ return touches[id]; }
+
+document.addEventListener('touchstart', e => {
+  e.preventDefault();
+  Array.from(e.changedTouches).forEach(t => { touches[t.identifier] = t; });
+  const ids = Object.keys(touches);
+
+  if(ids.length === 1){
+    // Single finger — draw mode
+    stopFlowerAnim();
+    flowerActive = false;
+    isDrawingTouch = true;
+    const t = e.changedTouches[0];
+    touchLastX = t.clientX; touchLastY = t.clientY;
+    setSt('☝  DRAWING', color);
+
+  } else if(ids.length === 2){
+    // Two fingers — pinch mode
+    isDrawingTouch = false;
+    lastX = null; lastY = null;
+    touchLastX = null; touchLastY = null;
+    const ts = Object.values(touches);
+    prevDist = Math.hypot(ts[0].clientX-ts[1].clientX, ts[0].clientY-ts[1].clientY);
+    pinchCenterX = (ts[0].clientX+ts[1].clientX)/2;
+    pinchCenterY = (ts[0].clientY+ts[1].clientY)/2;
+
+    flowerX = pinchCenterX; flowerY = pinchCenterY;
+    flowerPairIdx = (flowerPairIdx+1) % flowerPairs.length;
+    flowerColor  = flowerPairs[flowerPairIdx][0];
+    flowerColor2 = flowerPairs[flowerPairIdx][1];
+    flowerPetals = 5 + Math.floor(Math.random()*4); // 5-8 petals
+    flowerActive = true;
+    startFlowerAnim();
+    setSt('🌸  FLOWER MODE', flowerColor);
+  }
+}, {passive:false});
+
+document.addEventListener('touchmove', e => {
+  e.preventDefault();
+  Array.from(e.changedTouches).forEach(t => { touches[t.identifier] = t; });
+  const ids = Object.keys(touches);
+
+  if(ids.length === 1 && isDrawingTouch){
+    const t = e.changedTouches[0];
+    if(touchLastX !== null){
+      const d = Math.hypot(t.clientX-touchLastX, t.clientY-touchLastY);
+      if(d < 150) drawGlow(touchLastX, touchLastY, t.clientX, t.clientY, color, sz);
+    }
+    touchLastX = t.clientX; touchLastY = t.clientY;
+
+  } else if(ids.length === 2 && flowerActive){
+    const ts = Object.values(touches);
+    const dist = Math.hypot(ts[0].clientX-ts[1].clientX, ts[0].clientY-ts[1].clientY);
+    pinchCenterX = (ts[0].clientX+ts[1].clientX)/2;
+    pinchCenterY = (ts[0].clientY+ts[1].clientY)/2;
+
+    // Map pinch distance to flower radius (20px dist = closed, 300px = fully open)
+    const minD=20, maxD=300;
+    const maxR = Math.min(dC.width, dC.height) * 0.28;
+    const t01 = Math.max(0, Math.min(1, (dist-minD)/(maxD-minD)));
+    flowerTargetRadius = t01 * maxR;
+    flowerX = pinchCenterX; flowerY = pinchCenterY;
+
+    if(dist < (prevDist||dist)-5){
+      setSt('🤏  PINCH IN — BLOOMING!', flowerColor);
+    } else if(dist > (prevDist||dist)+5){
+      setSt('🌸  PINCH OUT — OPENING!', flowerColor2);
+    }
+    prevDist = dist;
+  }
+}, {passive:false});
+
+document.addEventListener('touchend', e => {
+  e.preventDefault();
+  Array.from(e.changedTouches).forEach(t => { delete touches[t.identifier]; });
+  const ids = Object.keys(touches);
+
+  if(ids.length === 0){
+    if(flowerActive && flowerRadius > 5){
+      // Stamp the flower onto drawCanvas, then clear flower canvas
+      dCtx.drawImage(fC,0,0);
+    }
+    stopFlowerAnim();
+    flowerActive = false;
+    flowerTargetRadius = 0;
+    flowerRadius = 0;
+    isDrawingTouch = false;
+    touchLastX = null; touchLastY = null;
+    prevDist = null;
+    setSt('☝ ONE FINGER = DRAW  |  🤏 PINCH = FLOWER');
+  } else if(ids.length === 1){
+    // Back to single finger
+    prevDist = null;
+    if(flowerActive && flowerRadius > 5){
+      dCtx.drawImage(fC,0,0);
+    }
+    stopFlowerAnim();
+    flowerActive = false;
+    flowerTargetRadius = 0; flowerRadius = 0;
+    const t = Object.values(touches)[0];
+    touchLastX = t.clientX; touchLastY = t.clientY;
+    isDrawingTouch = true;
+    setSt('☝  DRAWING', color);
+  }
+}, {passive:false});
+
+// ── Mouse fallback (desktop) ───────────────────────────────
+let mD=false, mLX=null, mLY=null;
+dC.addEventListener('mousedown', e=>{
+  if(e.button!==0) return;
+  mD=true; mLX=e.clientX; mLY=e.clientY;
+  setSt('🖱  DRAWING', color);
+});
+window.addEventListener('mousemove', e=>{
+  if(!mD) return;
+  drawGlow(mLX,mLY,e.clientX,e.clientY,color,sz);
+  mLX=e.clientX; mLY=e.clientY;
+});
+window.addEventListener('mouseup', ()=>{ mD=false; setSt('☝ ONE FINGER = DRAW  |  🤏 PINCH = FLOWER'); });
+
+// ── Init status ───────────────────────────────────────────
+setSt('☝ ONE FINGER = DRAW  |  🤏 PINCH = FLOWER');
 </script>
 </body>
 </html>
