@@ -1,0 +1,210 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const preloader = document.getElementById('preloader');
+
+    // Initial state: body should not scroll
+    document.body.classList.add('preloader-active');
+
+    // Page Load Handler
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            if (preloader) {
+                preloader.classList.add('fade-out');
+                document.body.classList.remove('preloader-active');
+            }
+            // Trigger hero entry animations after preloader fades
+            setTimeout(() => {
+                document.querySelector('.hero')?.classList.add('hero-loaded');
+            }, 400);
+        }, 4500);
+    });
+
+    const washForm = document.getElementById('washForm');
+    const sections = document.querySelectorAll('section, header');
+    const animatedItems = document.querySelectorAll('.animate');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    const navbar = document.getElementById('navbar');
+
+    // Smooth Scroll Offset for Sticky Header
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href');
+            if (targetId === "#") return;
+            const targetElement = document.querySelector(targetId);
+            if (!targetElement) return;
+            const targetPosition = targetElement.offsetTop;
+            window.scrollTo({
+                top: targetPosition - 80,
+                behavior: 'smooth'
+            });
+        });
+    });
+
+    // Intersection Observer for Animations
+    if ('IntersectionObserver' in window) {
+        const observerOptions = {
+            threshold: 0.15,
+            rootMargin: "0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    const animateElements = entry.target.querySelectorAll('.animate');
+                    animateElements.forEach((el, index) => {
+                        setTimeout(() => {
+                            el.classList.add('is-visible');
+                        }, index * 100);
+                    });
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => observer.observe(section));
+    } else {
+        animatedItems.forEach(el => el.classList.add('is-visible'));
+    }
+
+    // ========================================
+    // BEFORE / AFTER SLIDER
+    // ========================================
+    const slider     = document.getElementById('baSlider');
+    const beforeEl   = document.getElementById('baBefore');
+    const handle     = document.getElementById('baHandle');
+
+    if (slider && beforeEl && handle) {
+        let isDragging = false;
+
+        function getPosition(e) {
+            const rect = slider.getBoundingClientRect();
+            let x;
+            if (e.touches && e.touches.length > 0) {
+                x = e.touches[0].clientX - rect.left;
+            } else {
+                x = e.clientX - rect.left;
+            }
+            // Clamp between 0 and width
+            x = Math.max(0, Math.min(x, rect.width));
+            return x / rect.width;   // 0‥1
+        }
+
+        function updateSlider(ratio) {
+            const percent = ratio * 100;
+            // clip-path: inset(top right bottom left)
+            // We want the BEFORE image visible on the LEFT side
+            beforeEl.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+            handle.style.left = percent + '%';
+            handle.setAttribute('aria-valuenow', Math.round(percent));
+        }
+
+        // Initialise at 50 %
+        updateSlider(0.5);
+
+        // Pointer down
+        slider.addEventListener('mousedown',  startDrag);
+        slider.addEventListener('touchstart', startDrag, { passive: false });
+
+        function startDrag(e) {
+            e.preventDefault();
+            isDragging = true;
+            slider.classList.add('active');
+            updateSlider(getPosition(e));
+            // Hide hint after first interaction
+            const hint = document.querySelector('.slider-hint');
+            if (hint) hint.style.opacity = '0';
+        }
+
+        // Pointer move (on window so drag continues outside slider)
+        window.addEventListener('mousemove',  onMove);
+        window.addEventListener('touchmove',  onMove, { passive: false });
+
+        function onMove(e) {
+            if (!isDragging) return;
+            e.preventDefault();
+            updateSlider(getPosition(e));
+        }
+
+        // Pointer up
+        window.addEventListener('mouseup',  stopDrag);
+        window.addEventListener('touchend', stopDrag);
+
+        function stopDrag() {
+            isDragging = false;
+            slider.classList.remove('active');
+        }
+
+        // Keyboard accessibility (left / right arrow)
+        handle.addEventListener('keydown', (e) => {
+            const current = parseFloat(handle.getAttribute('aria-valuenow')) || 50;
+            let next = current;
+            if (e.key === 'ArrowLeft')  next = Math.max(0, current - 2);
+            if (e.key === 'ArrowRight') next = Math.min(100, current + 2);
+            if (next !== current) {
+                e.preventDefault();
+                updateSlider(next / 100);
+            }
+        });
+    }
+
+    // ========================================
+    // FORM SUBMISSION → WHATSAPP
+    // ========================================
+    if (washForm) {
+        washForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const name        = document.getElementById('custName').value;
+            const packageName = document.getElementById('package').value;
+            const washDate    = document.getElementById('date').value;
+            const address     = document.getElementById('address').value;
+
+            const whatsappNumber = "918848900790";
+            const message = `*ShineXpress Booking* 🚗✨\n\n` +
+                          `*Package:* ${packageName}\n` +
+                          `*Customer:* ${name}\n` +
+                          `*Date:* ${washDate}\n` +
+                          `*Address:* ${address}\n\n` +
+                          `_Sent via ShineXpress Website_`;
+
+            const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+            washForm.reset();
+        });
+    }
+
+    // ========================================
+    // SCROLL HEADER STYLING
+    // ========================================
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+    });
+
+    // ========================================
+    // SCROLL-REVEAL FOR SECTIONS
+    // ========================================
+    const revealElements = document.querySelectorAll(
+        '.service-card, .addon-card, .feature-card, .testimonial-card, .reel-container, .booking-info, .booking-form'
+    );
+
+    if ('IntersectionObserver' in window && revealElements.length) {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transitionDelay = (i * 0.06) + 's';
+                    entry.target.classList.add('is-visible');
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        revealElements.forEach(el => {
+            el.classList.add('animate');
+            revealObserver.observe(el);
+        });
+    }
+});
