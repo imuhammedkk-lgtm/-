@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ShineXpress - Premium Car Wash & Detailing services in Kilimanoor, Kerala. Experience the best in ceramic coating, interior steam cleaning, and doorstep car wash.">
+    <meta name="keywords" content="ShineXpress, Car Wash Kilimanoor, Car Detailing Kerala, Doorstep Car Wash, Ceramic Coating Kerala, Interior Cleaning, ShineXpress Car Wash">
+    <meta name="author" content="ShineXpress">
+    
+    <!-- Open Graph for Social Media -->
+    <meta property="og:title" content="ShineXpress | Premium Car Wash & Detailing">
+    <meta property="og:description" content="Trivandrum's premier doorstep car wash and detailing service. Experience luxury at your doorstep with ShineXpress.">
+    <meta property="og:image" content="https://i.ibb.co/cKTDT1rQ/IMG-20260318-WA0000.jpg">
+    <meta property="og:url" content="https://shinexpress.in"> <!-- Replace with actual domain if known -->
+
+    <title>ShineXpress | Premium Car Wash & Detailing | Kilimanoor, Kerala</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:wght@400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="bg-gradient">
+
+    <!-- Premium Logo Animation Preloader -->
+    <div id="preloader">
+        <div class="preloader-logo-wrap">
+            <!-- Rotating rings -->
+            <div class="preloader-ring ring-outer"></div>
+            <div class="preloader-ring ring-mid"></div>
+            <div class="preloader-ring ring-inner"></div>
+            <!-- Logo image -->
+            <div class="preloader-logo-box">
+                <img src="assets/images/logo_3d.png" alt="ShineXpress Logo" class="preloader-logo-img">
+                <div class="preloader-logo-shimmer"></div>
+            </div>
+            <!-- Glow orbs -->
+            <div class="preloader-orb orb-1"></div>
+            <div class="preloader-orb orb-2"></div>
+        </div>
+        <div class="preloader-brand">
+            <span class="preloader-brand-text">SHINEXPRESS</span>
+            <span class="preloader-brand-tagline">Premium Car Wash & Detailing</span>
+        </div>
+        <div class="preloader-progress-bar"><div class="preloader-progress-fill"></div></div>
+        <button id="skip-preloader" class="btn-glass-skip" aria-label="Skip intro">
+            <span>Skip</span>
+            <i class="fas fa-chevron-right"></i>
+        </button>
+    </div>
+
+    <!-- Top Info Bar -->
+    <div class="top-info-bar">
+        <div class="container">
+            <div class="top-info-left">
+                <i class="fas fa-location-dot"></i> <span>Kilimanoor | Kottarakkara</span>
+            </div>
+            <div class="top-info-right">
+                <i class="fas fa-phone"></i> <span>+91 88487 00790</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <nav id="navbar">
+        <div class="container">
+            <a href="#" class="logo">
+                <img src="assets/images/logo_3d.png" alt="ShineXpress Logo">
+            </a>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#services">Packages</a></li>
+                <li><a href="#additional-services">Add-ons</a></li>
+                <li><a href="#why-us">Why Us</a></li>
+                <li><a href="#testimonials">Reviews</a></li>
+                <li><a href="#work">Our Work</a></li>
+                <li><a href="#careers">Careers</a></li>
+                <li class="mobile-only-btn"><a href="#" class="btn btn-primary trigger-whatsapp-modal">Book Now</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="#" class="btn btn-primary desktop-only-btn trigger-whatsapp-modal">Book Now</a>
+                <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="hero">
+        <!-- Premium Automotive Motion Background -->
+        <div class="hero-motion-bg">
+            <canvas id="hero-particles-canvas"></canvas>
+            <div class="studio-grid"></div>
+            <div class="hero-glow-container">
+                <div class="hero-glow-orb glow-cyan"></div>
+                <div class="hero-glow-orb glow-teal"></div>
+                <div class="hero-glow-orb glow-magenta"></div>
+            </div>
+            
+
+
+            <!-- Overlapping Premium Fluid Waves -->
+            <div class="fluid-waves-container">
+                <svg class="fluid-wave-svg wave-primary" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                    <path d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,218.7C672,203,768,149,864,138.7C960,128,1056,160,1152,165.3C1248,171,1344,149,1392,138.7L1440,128L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                </svg>
+                <svg class="fluid-wave-svg wave-secondary" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                    <path d="M0,192L48,197.3C96,203,192,213,288,202.7C384,192,480,160,576,144C672,128,768,128,864,144C960,160,1056,192,1152,197.3C1248,203,1344,181,1392,170.7L1440,160L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                </svg>
+                <svg class="fluid-wave-svg wave-dark" viewBox="0 0 1440 320" preserveAspectRatio="none">
+                    <path d="M0,288L48,272C96,256,192,224,288,197.3C384,171,480,149,576,165.3C672,181,768,235,864,250.7C960,267,1056,245,1152,213.3C1248,181,1344,139,1392,117.3L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path>
+                </svg>
+            </div>
+        </div>
+
+        <div class="hero-inner container">
+            <!-- LEFT: Text + CTAs -->
+            <div class="hero-content animate-hero">
+                <div class="hero-badge">
+                    <span class="badge-dot"></span>
+                    <span>Premium Car Wash &bull; Kilimanoor, Kottarakkara, Kerala</span>
+                </div>
+
+                <h1 style="color: var(--primary); text-transform: uppercase;">
+                    WHERE CAR BECOME ART
+                </h1>
+
+                <p class="hero-desc">Experience the transformation. Our expert detailers bring showroom-level perfection to your doorstep every single time.</p>
+
+                <div class="hero-btns">
+                    <a href="#services" class="btn btn-primary" id="hero-services-btn">Our Services</a>
+                    <a href="https://www.instagram.com/shinexpress_3.1?igsh=MWdwNXVkYThrdHdveQ==" class="btn btn-instagram" target="_blank" id="hero-insta-btn">
+                        <i class="fab fa-instagram"></i> Instagram Profile
+                    </a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <strong>500+</strong>
+                        <span>Happy Customers</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <strong>5</strong>
+                        <span>Packages</span>
+                    </div>
+                    <div class="hero-stat-divider"></div>
+                    <div class="hero-stat">
+                        <strong>100%</strong>
+                        <span>Satisfaction</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT: Before/After Slider -->
+            <div class="hero-slider-wrap animate-hero-right">
+                
+                <div class="ba-slider" id="baSlider">
+                    <div class="ba-after">
+                        <img src="assets/images/car_after.png" alt="After ShineXpress">
+                    </div>
+                    <div class="ba-before" id="baBefore">
+                        <img src="assets/images/car_before.png" alt="Before ShineXpress">
+                    </div>
+                    
+                    <div class="ba-tag ba-tag-before">Before</div>
+                    <div class="ba-tag ba-tag-after">After</div>
+                    
+                    <div class="ba-handle" id="baHandle" role="slider" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" tabindex="0" aria-label="Before and after comparison slider">
+                        <div class="handle-line handle-line-top"></div>
+                        <div class="handle-circle">
+                            <i class="fas fa-arrows-left-right"></i>
+                        </div>
+                        <div class="handle-line handle-line-bottom"></div>
+                    </div>
+                </div>
+                
+                <div class="slider-hint">
+                    <i class="fas fa-arrows-left-right"></i>
+                    <span>Drag slider to compare</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="scroll-indicator" aria-hidden="true">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+            <span>Scroll</span>
+        </div>
+    </section>
+
+    <!-- Prominent Location Banner -->
+    <section class="location-banner animate">
+        <div class="container">
+            <div class="location-banner-inner">
+                <h2>NOW AVAILABLE AT</h2>
+                <div class="location-names">
+                    <span class="loc-text gradient-text">KILIMANOOR</span>
+                    <span class="loc-divider">&amp;</span>
+                    <span class="loc-text gradient-text">KOTTARAKKARA</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Premium <span class="gradient-text">Services</span></h2>
+                <p>Choose the perfect care package for your vehicle.</p>
+            </div>
+            
+            <div class="services-grid">
+                <!-- Basic Wash -->
+                <div class="service-card animate">
+                    <div class="service-img">
+                        <img src="https://i.ibb.co/1GMxC7bN/Car-Detailing-Tips-for-a-Professional-Looking-Finish-at-Home.jpg" alt="Basic Wash">
+                    </div>
+                    <h3>Basic Wash</h3>
+                    <div class="service-price">₹<span class="count-up" data-target="549">0</span></div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> Interior Vacuum</li>
+                        <li><i class="fas fa-check-circle"></i> Dashboard Polish</li>
+                        <li><i class="fas fa-check-circle"></i> Carpet Cleaning</li>
+                        <li><i class="fas fa-check-circle"></i> Door Pad Polish</li>
+                        <li><i class="fas fa-check-circle"></i> Trunk Vacuum</li>
+                        <li><i class="fas fa-check-circle"></i> Exterior Double Foaming</li>
+                        <li><i class="fas fa-check-circle"></i> Tyre + Alloy Wheel Cap Dressing</li>
+                        <li><i class="fas fa-check-circle"></i> Tyre Shine</li>
+                        <li><i class="fas fa-check-circle"></i> Exterior Wash</li>
+                        <li><i class="fas fa-check-circle"></i> Hand Rinse</li>
+                        <li><i class="fas fa-check-circle"></i> Air fragrance</li>
+                        <li><i class="fas fa-check-circle"></i> Tissue paper</li>
+                        <li><i class="fas fa-check-circle"></i> Wiper liquid</li>
+                        <li><i class="fas fa-check-circle"></i> Tyre air checking</li>
+                    </ul>
+                    <a href="#booking" class="btn btn-primary" onclick="selectPackage('Basic Wash (₹549)')">Book Now</a>
+                </div>
+
+                <!-- Regular Standard Apex-->
+                <div class="service-card animate">
+                    <div class="service-img">
+                        <img src="https://i.ibb.co/5gnDykbS/modern-car-wash-banner-blue-splashes-clean-vehicle-close-up-being-washed-foam-water-perfect-advertis.jpg" alt="Regular Standard">
+                    </div>
+                    <h3>REGULAR STANDARD APEX</h3>
+                    <p class="service-tagline">Complete Care For Your Car</p>
+                    <div class="service-price">₹<span class="count-up" data-target="999">0</span></div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> AC VENT STEAM CLEANING</li>
+                        <li><i class="fas fa-check-circle"></i> ROOF STEAM CLEANING</li>
+                        <li><i class="fas fa-check-circle"></i> UNDERBODY</li>
+                        <li><i class="fas fa-check-circle"></i> DASHBOARD DEEP CLEANING & POLISH</li>
+						<li><i class="fas fa-check-circle"></i> Interior Vacuum</li>
+                        <li><i class="fas fa-check-circle"></i> Dashboard Polish</li>
+                        <li><i class="fas fa-check-circle"></i> Carpet Cleaning</li>
+                        <li><i class="fas fa-check-circle"></i> Door Pad Polish</li>
+                        <li><i class="fas fa-check-circle"></i> Trunk Vacuum</li>
+                        <li><i class="fas fa-check-circle"></i> Exterior Double Foaming</li>
+                        <li><i class="fas fa-check-circle"></i> Tyre + Alloy Wheel Cap Dressing</li>
+                        <li><i class="fas fa-check-circle"></i> Tyre Shine</li>
+                        <li><i class="fas fa-check-circle"></i> Exterior Wash</li>
+                        <li><i class="fas fa-check-circle"></i> Hand Rinse</li>
+                        <li><i class="fas fa-check-circle"></i> Air fragrance</li>
+                        <li><i class="fas fa-check-circle"></i> Tissue paper</li>
+                        <li><i class="fas fa-check-circle"></i> Wiper liquid</li>
+                        <li><i class="fas fa-check-circle"></i> Tyre air checking</li>
+                    </ul>
+                    <a href="#booking" class="btn btn-primary" onclick="selectPackage('Regular Standard (₹999)')">Book Now</a>
+                </div>
+
+                <!-- Premium Detail -->
+                <div class="service-card animate">
+                    <div class="service-img">
+                        <img src="https://i.ibb.co/35qgkWJ1/Learn-how-expert-care-boosts-your-car-s-shine.jpg" alt="Premium Infusion">
+                    </div>
+                    <h3>Premium Infusion</h3>
+                    <div class="service-price">₹<span class="count-up" data-target="1399">0</span></div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> Engine Bay Wash</li>
+                        <li><i class="fas fa-check-circle"></i> Carpet Shampoo Wash</li>
+                        <li><i class="fas fa-check-circle"></i> Interior Deep Vacuum</li>
+                        <li><i class="fas fa-check-circle"></i> Dashboard Polish & UV Protection</li>
+                        <li><i class="fas fa-check-circle"></i> Trunk Vacuum</li>
+                        <li><i class="fas fa-check-circle"></i> Exterior Double Foaming</li>
+                        <li><i class="fas fa-check-circle"></i> Tyre + Alloy Wheel Cap Dressing</li>
+                        <li><i class="fas fa-check-circle"></i> Exterior Wash</li>
+                        <li><i class="fas fa-check-circle"></i> Tyre Shine</li>
+                        <li><i class="fas fa-check-circle"></i> Hand Rinse</li>
+                        <li><i class="fas fa-check-circle"></i> AC vent steam cleaning</li>
+                        <li><i class="fas fa-check-circle"></i> Engine bay steam cleaning</li>
+                        <li><i class="fas fa-check-circle"></i> Underbody wash</li>
+                        <li><i class="fas fa-check-circle"></i> Air fragrance</li>
+                        <li><i class="fas fa-check-circle"></i> Tissue paper</li>
+                        <li><i class="fas fa-check-circle"></i> Wiper liquid</li>
+                        <li><i class="fas fa-check-circle"></i> Air checking</li>
+                        <li><i class="fas fa-check-circle"></i> wax treatment</li>
+                    </ul>
+                    <a href="#booking" class="btn btn-primary" onclick="selectPackage('Premium Infusion (₹1399)')">Book Now</a>
+                </div>
+
+                <!-- Deluxe Valet -->
+                <div class="service-card animate">
+                    <div class="service-img">
+                        <img src="https://i.ibb.co/FbQ06v5d/Transform-your-vehicle-with-top-tier-Car-Wash.jpg" alt="Deluxe Valet">
+                    </div>
+                    <h3>Deluxe</h3>
+                    <div class="service-price">₹<span class="count-up" data-target="2499">0</span></div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> AC Steaming</li>
+                        <li><i class="fas fa-check-circle"></i> Engine Bay Wash</li>
+                        <li><i class="fas fa-check-circle"></i> Carpet Shampoo Wash</li>
+                        <li><i class="fas fa-check-circle"></i> Interior Deep Cleaning</li>
+                        <li><i class="fas fa-check-circle"></i> Door Pad Stain Removal</li>
+                        <li><i class="fas fa-check-circle"></i> Dashboard Polish & UV Protection</li>
+                        <li><i class="fas fa-check-circle"></i> Leather Seat Polish and Wax</li>
+                        <li><i class="fas fa-check-circle"></i> Trunk Vacuum</li>
+                        <li><i class="fas fa-check-circle"></i> Exterior Double Foaming</li>
+                        <li><i class="fas fa-check-circle"></i> Tyre + Alloy Wheel Cap Dressing</li>
+                        <li><i class="fas fa-check-circle"></i> Exterior Wash</li>
+                        <li><i class="fas fa-check-circle"></i> Exterior Deep Cleaning</li>
+                        <li><i class="fas fa-check-circle"></i> Tyre Shine</li>
+                        <li><i class="fas fa-check-circle"></i> Hand Rinse</li>
+                        <li><i class="fas fa-check-circle"></i> Dashboard and all doors cleaning & polish</li>
+                        <li><i class="fas fa-check-circle"></i> Leather or rexin deep cleaning</li>
+                        <li><i class="fas fa-check-circle"></i> Roof steam cleaning</li>
+                        <li><i class="fas fa-check-circle"></i> Underbody wash</li>
+                        <li><i class="fas fa-check-circle"></i> Air fragrance</li>
+                        <li><i class="fas fa-check-circle"></i> Tissue paper</li>
+                        <li><i class="fas fa-check-circle"></i> Wiper liquid</li>
+                        <li><i class="fas fa-check-circle"></i> Air checking</li>
+                    </ul>
+                    <a href="#booking" class="btn btn-primary" onclick="selectPackage('Deluxe (₹2499)')">Book Now</a>
+                </div>
+
+                <!-- Signature Shine -->
+                <div class="service-card animate" style="border-color: var(--primary); background: rgba(0, 242, 255, 0.05);">
+                    <div class="service-img">
+                        <img src="https://i.ibb.co/Kpgdmd5S/express-car-wash-vs-full-service-car-wash.jpg" alt="Signature Shine">
+                    </div>
+                    <h3>Signature Shine</h3>
+                    <div class="service-price">₹<span class="count-up" data-target="3499">0</span></div>
+                    <ul class="service-features">
+                        <li><i class="fas fa-check-circle"></i> Body wax treatment</li>
+                        <li><i class="fas fa-check-circle"></i> Headlight restoration</li>
+                        <li><i class="fas fa-check-circle"></i> AC Steaming</li>
+                        <li><i class="fas fa-check-circle"></i> Engine Bay Wash</li>
+                        <li><i class="fas fa-check-circle"></i> Carpet Shampoo Wash</li>
+                        <li><i class="fas fa-check-circle"></i> Interior Deep Cleaning</li>
+                        <li><i class="fas fa-check-circle"></i> Door Pad Stain Removal</li>
+                        <li><i class="fas fa-check-circle"></i> Dashboard Polish & UV Protection</li>
+                        <li><i class="fas fa-check-circle"></i> Leather Seat Polish and Wax</li>
+                        <li><i class="fas fa-check-circle"></i> Trunk Vacuum</li>
+                        <li><i class="fas fa-check-circle"></i> Exterior Double Foaming</li>
+                        <li><i class="fas fa-check-circle"></i> Tyre + Alloy Wheel Cap Dressing</li>
+                        <li><i class="fas fa-check-circle"></i> Exterior Wash</li>
+                        <li><i class="fas fa-check-circle"></i> Exterior Deep Cleaning</li>
+                        <li><i class="fas fa-check-circle"></i> Tyre Shine</li>
+                        <li><i class="fas fa-check-circle"></i> Hand Rinse</li>
+                        <li><i class="fas fa-check-circle"></i> Dashboard and all doors deep cleaning and polish</li>
+                        <li><i class="fas fa-check-circle"></i> Lether or rexin deep cleaning</li>
+                        <li><i class="fas fa-check-circle"></i> Roof steam cleaning</li>
+                        <li><i class="fas fa-check-circle"></i> Underbody wash</li>
+                        <li><i class="fas fa-check-circle"></i> Air fragrance</li>
+                        <li><i class="fas fa-check-circle"></i> Tissue paper</li>
+                        <li><i class="fas fa-check-circle"></i> Wiper liquid</li>
+                        <li><i class="fas fa-check-circle"></i> Air checking</li>
+                    </ul>
+                    <a href="#booking" class="btn btn-primary" onclick="selectPackage('Signature Shine (₹3499)')">Book Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Services Section -->
+    <section id="additional-services" class="additional-services">
+        <div class="container">
+            <div class="section-header">
+                <h2>Additional <span class="gradient-text">Services</span></h2>
+            </div>
+
+            <div class="addons-grid">
+                <!-- AC Vent -->
+                <div class="addon-card animate">
+                    <div class="ba-container">
+                        <img src="https://i.ibb.co/24wqWF0/Learn-more-about-Steam-Clean-Engine-like-a-PRO.jpg" alt="AC Vent Cleaning">
+                    </div>
+                    <div class="addon-content">
+                        <div class="addon-flex">
+                            <h3>AC Vent Steam Cleaning</h3>
+                            <span class="addon-price">₹199/249/299</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Headlight -->
+                <div class="addon-card animate">
+                    <div class="ba-container">
+                        <img src="https://i.ibb.co/jkjQ2hbW/Looking-for-car-headlight-restoration-near-me.jpg" alt="Headlight Restoration">
+                    </div>
+                    <div class="addon-content">
+                        <div class="addon-flex">
+                            <h3>Headlight Restoration</h3>
+                            <span class="addon-price">₹599/699/799</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interior Deep -->
+                <div class="addon-card animate">
+                    <div class="ba-container">
+                        <img src="https://i.ibb.co/bwrkBQx/images.webp" alt="Interior Deep Cleaning">
+                    </div>
+                    <div class="addon-content">
+                        <div class="addon-flex">
+                            <h3>Interior Deep Cleaning</h3>
+                            <span class="addon-price">₹699/799/999</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upholstery -->
+                <div class="addon-card animate">
+                    <div class="ba-container">
+                        <img src="https://i.ibb.co/99dqg0XM/0282470001668613661.jpg" alt="Upholstery & Leather Polish">
+                    </div>
+                    <div class="addon-content">
+                        <div class="addon-flex">
+                            <h3>Upholstery & Leather Polish</h3>
+                            <span class="addon-price">₹799/899/1299</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Spray Wax -->
+                <div class="addon-card animate">
+                    <div class="ba-container">
+                        <img src="https://i.ibb.co/Pv2N6J0W/SPWAX-Secondary-image-02.webp" alt="Body Spray Wax">
+                    </div>
+                    <div class="addon-content">
+                        <div class="addon-flex">
+                            <h3>Body Spray Wax Treatment</h3>
+                            <span class="addon-price">₹499/599/699</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Full Body Wash -->
+                <div class="addon-card animate">
+                    <div class="ba-container">
+                        <img src="https://i.ibb.co/bMf8crS0/Transform-your-vehicle-with-top-tier-Car-Wash.jpg" alt="Full Body Wash">
+                    </div>
+                    <div class="addon-content">
+                        <div class="addon-flex">
+                            <h3>Full Body Wash</h3>
+                            <span class="addon-price">₹349/399/449</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roof Steam -->
+                <div class="addon-card animate">
+                    <div class="ba-container">
+                        <img src="https://i.ibb.co/S4fN0hwY/featured-image-11121033260.jpg" alt="Roof Steam Cleaning">
+                    </div>
+                    <div class="addon-content">
+                        <div class="addon-flex">
+                            <h3>Roof Steam Cleaning</h3>
+                            <span class="addon-price">₹249/249/299</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Engine Room -->
+                <div class="addon-card animate">
+                    <div class="ba-container">
+                        <img src="https://i.ibb.co/TMSGCgrv/car-engine-steam-cleaning-service-in-London.webp" alt="Engine Room Steam">
+                    </div>
+                    <div class="addon-content">
+                        <div class="addon-flex">
+                            <h3>Engine Room Steam Cleaning</h3>
+                            <span class="addon-price">₹249/249/299</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Roof Deep -->
+                <div class="addon-card animate">
+                    <div class="ba-container">
+                        <img src="https://i.ibb.co/wFf5gwqm/images-1.webp" alt="Roof Deep Cleaning">
+                    </div>
+                    <div class="addon-content">
+                        <div class="addon-flex">
+                            <h3>Roof Deep Cleaning</h3>
+                            <span class="addon-price">₹699/899/1299</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Underbody -->
+                <div class="addon-card animate">
+                    <div class="ba-container">
+                        <img src="https://i.ibb.co/zHW0tgKF/Hand-Car-Wash-with-Steam-for-a-Perfect-Clean-Detail-XPerts.jpg" alt="Underbody Wash">
+                    </div>
+                    <div class="addon-content">
+                        <div class="addon-flex">
+                            <h3>Underbody Wash</h3>
+                            <span class="addon-price">₹50/70/90</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section id="why-us" class="why-us">
+        <div class="container">
+            <div class="section-header">
+                <h2>Why Choose <span class="gradient-text">ShineXpress?</span></h2>
+                <p>Experience the premium difference in every wash.</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="feature-card animate">
+                    <div class="feature-icon"><i class="fas fa-award"></i></div>
+                    <h3>Premium Quality</h3>
+                    <p>We use only the finest pH-neutral shampoos and high-grade waxes to protect your car's finish.</p>
+                </div>
+                <div class="feature-card animate">
+                    <div class="feature-icon"><i class="fas fa-hand-sparkles"></i></div>
+                    <h3>Expert Detailers</h3>
+                    <p>Our team consists of certified professionals who treat every vehicle as if it were their own.</p>
+                </div>
+                <div class="feature-card animate">
+                    <div class="feature-icon"><i class="fas fa-leaf"></i></div>
+                    <h3>Eco-Friendly</h3>
+                    <p>We utilize water-saving technology and biodegradable products to care for the environment.</p>
+                </div>
+                <div class="feature-card animate">
+                    <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                    <h3>Time Efficient</h3>
+                    <p>Get a showroom-quality shine without the wait. Our streamlined process saves you valuable time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>What Our <span class="gradient-text">Customers Say</span></h2>
+                <p>Real feedback from our valued clients.</p>
+            </div>
+
+            <div class="testimonials-grid">
+                <div class="testimonial-card animate">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text">"The best car wash service I've ever used. The attention to detail in the Deluxe Valet package is absolutely incredible. My car looks brand new!"</p>
+                    <div class="testimonial-footer">
+                        <div class="client-info">
+                            <strong>Adersh</strong>
+                            <span>BMW 5 Series Owner</span>
+                        </div>
+                        <div class="rating"><i class="fas fa-star"></i> 5.0</div>
+                    </div>
+                </div>
+
+                <div class="testimonial-card animate">
+                    <div class="quote-icon"><i class="fas fa-quote-left"></i></div>
+                    <p class="testimonial-text">"ShineXpress is my go-to for weekly washes. The staff is professional, and the Premium Infusion really makes my paint pop. Highly recommended!"</p>
+                    <div class="testimonial-footer">
+                        <div class="client-info">
+                            <strong>Anjali Nair</strong>
+                            <span>Audi A4 Owner</span>
+                        </div>
+                        <div class="rating"><i class="fas fa-star"></i> 5.0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Instagram Section -->
+    <section id="work" class="instagram-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>See Our <span class="gradient-text">Work In Action</span></h2>
+                <p>Check out some of our transactions on Instagram!</p>
+            </div>
+
+            <div class="reels-grid">
+                <!-- Reel 1 -->
+                <div class="reel-container animate">
+                    <a href="https://www.instagram.com/reel/DVxpN14ivoI/" target="_blank">
+                        <img src="https://i.ibb.co/0yQGCsDs/Screenshot-19-3-2026-233824-www-instagram-com.jpg" alt="Work 1">
+                        <div class="reel-overlay">
+                            <i class="fab fa-instagram"></i>
+                            <div class="reel-info">
+                                <span>@shinexpress_3.1</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- Reel 2 -->
+                <div class="reel-container animate">
+                    <a href="https://www.instagram.com/reel/DVBWy2lD0Uf/" target="_blank">
+                        <img src="https://i.ibb.co/yBxJLybn/1000145185.jpg" alt="Work 2">
+                        <div class="reel-overlay">
+                            <i class="fab fa-instagram"></i>
+                            <div class="reel-info">
+                                <span>@shinexpress_3.1</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- Reel 3 -->
+                <div class="reel-container animate">
+                    <a href="https://www.instagram.com/reel/DU-9pM-j0P-/" target="_blank">
+                        <img src="https://i.ibb.co/hJRSt5W8/1000145187-1.jpg" alt="Work 3">
+                        <div class="reel-overlay">
+                            <i class="fab fa-instagram"></i>
+                            <div class="reel-info">
+                                <span>@shinexpress_3.1</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <!-- Reel 4 -->
+                <div class="reel-container animate">
+                    <a href="https://www.instagram.com/reel/DT8eZvxD3OZ/" target="_blank">
+                        <img src="https://i.ibb.co/WvWdXxfs/1000145188.jpg" alt="Work 4">
+                        <div class="reel-overlay">
+                            <i class="fab fa-instagram"></i>
+                            <div class="reel-info">
+                                <span>@shinexpress_3.1</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="insta-footer animate">
+                <a href="https://www.instagram.com/shinexpress_3.1?igsh=MWdwNXVkYThrdHdveQ==" target="_blank" class="btn btn-instagram">
+                     <i class="fab fa-instagram"></i> Follow ShineXpress
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Careers Section -->
+    <section id="careers" class="careers-section">
+        <div class="container">
+            <div class="careers-container">
+                <div class="careers-info animate">
+                    <h2>Join Our <span class="gradient-text">Team</span></h2>
+                    <p>We are always looking for passionate, skilled professionals to join the ShineXpress family. Apply today and start your career with us!</p>
+                    
+                    <div class="careers-perks">
+                        <div class="perk-item">
+                            <i class="fas fa-money-bill-wave gradient-text"></i>
+                            <div>
+                                <h4>Attractive Salary</h4>
+                                <p>Industry-best competitive salary packages with regular performance incentives.</p>
+                            </div>
+                        </div>
+                        <div class="perk-item">
+                            <i class="fas fa-shield-halved gradient-text"></i>
+                            <div>
+                                <h4>Job Security & Growth</h4>
+                                <p>Work with the most modern car care equipment in a safe and supportive professional environment.</p>
+                            </div>
+                        </div>
+                        <div class="perk-item">
+                            <i class="fas fa-circle-check gradient-text"></i>
+                            <div>
+                                <h4>Professional Training</h4>
+                                <p>Get trained by premium detailing experts on high-end ceramic coatings, waxing, and steam wash.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="booking-form careers-form animate">
+                    <form id="careerForm">
+                        <div class="form-group">
+                            <label>Full Name / മുഴുവൻ പേര്</label>
+                            <input type="text" id="careerName" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number / ഫോൺ നമ്പർ</label>
+                            <input type="tel" id="careerPhone" placeholder="Your Phone Number" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Position Applied For / അപേക്ഷിക്കുന്ന തസ്തിക</label>
+                            <select id="careerPosition" required>
+                                <option value="">Select Position</option>
+                                <option value="Professional Detailer">Professional Detailer (ഡീറ്റെയ്‌ലർ)</option>
+                                <option value="Car Washer">Car Washer (കാർ വാഷർ)</option>
+                                <option value="Driver">Driver (ഡ്രൈവർ)</option>
+                                <option value="Workshop Supervisor">Workshop Supervisor (സൂപ്പർവൈസർ)</option>
+                                <option value="Customer Relations">Customer Relations (കസ്റ്റമർ റിലേഷൻസ്)</option>
+                                <option value="Other">Other / മറ്റുള്ളവ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Experience / പ്രവൃത്തിപരിചയം</label>
+                            <select id="careerExperience" required>
+                                <option value="">Select Experience</option>
+                                <option value="Fresher / No Experience">Fresher / പരിചയമില്ലാത്തവർ</option>
+                                <option value="Under 1 Year">Under 1 Year (1 വർഷത്തിൽ താഴെ)</option>
+                                <option value="1-2 Years">1-2 Years (1-2 വർഷം)</option>
+                                <option value="3-5 Years">3-5 Years (3-5 വർഷം)</option>
+                                <option value="5+ Years">5+ Years (5 വർഷത്തിൽ കൂടുതൽ)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Preferred Location / താല്പര്യമുള്ള സ്ഥലം</label>
+                            <select id="careerLocation" required>
+                                <option value="">Select Location</option>
+                                <option value="Kilimanoor">Kilimanoor (കിളിമാനൂർ)</option>
+                                <option value="Kottarakkara">Kottarakkara (കൊട്ടാരക്കര)</option>
+                                <option value="Any Location">Any / ഏതുമാകാം</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Skills & Past Experience / യോഗ്യതകളും പരിചയവും</label>
+                            <textarea id="careerDetails" rows="4" placeholder="Briefly describe your experience, past workplaces, or skills..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Application</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Booking Section -->
+    <section id="booking" class="booking-section">
+        <div class="container">
+            <div class="booking-container">
+                <div class="booking-info animate">
+                    <h2>Book Your <span class="gradient-text">Session</span></h2>
+                    <p>Ready to give your car the attention it deserves? Fill out the form and our team will confirm your slot within minutes.</p>
+                    
+                    <div class="booking-details">
+                        <div class="booking-detail-item">
+                            <i class="fas fa-location-dot gradient-text"></i>
+                            <span>Erattachira, Kilimanoor, Pazhayakunnummel, Kerala 695601</span>
+                        </div>
+                        <div class="booking-detail-item">
+                            <i class="fas fa-location-dot gradient-text"></i>
+                            <span>Govinda Vilasom, T.B junction, Kottarakkara, Kerala 691506</span>
+                        </div>
+                        <div class="booking-detail-item">
+                            <i class="fas fa-phone gradient-text"></i>
+                            <a href="tel:+918848700790">+91 88487 00790</a>
+                        </div>
+                        <div class="booking-detail-item" style="align-items: flex-start;">
+                            <i class="fab fa-whatsapp gradient-text" style="margin-top: 4px;"></i>
+                            <div style="display: flex; flex-direction: column; gap: 4px;">
+                                <a href="https://wa.me/918848900790" target="_blank">+91 88489 00790</a>
+                                <a href="https://wa.me/918848700790" target="_blank">+91 88487 00790</a>
+                            </div>
+                        </div>
+                        <div class="booking-detail-item">
+                            <i class="fas fa-clock gradient-text"></i>
+                            <span>Mon - Sat: 8:00 AM - 8:00 PM</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="booking-form animate">
+                    <form id="washForm">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="custName" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Wash Package</label>
+                            <select id="package" required>
+                                <option value="">Select Package</option>
+                                <option value="Basic Wash (₹549)">Basic Wash</option>
+                                <option value="Regular Standard (₹999)">Regular Standard</option>
+                                <option value="Premium Infusion (₹1399)">Premium Infusion</option>
+                                <option value="Deluxe (₹2499)">Deluxe</option>
+                                <option value="Signature Shine (₹3499)">Signature Shine (Elite)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Service Location / സ്ഥലം</label>
+                            <select id="washLocation" required>
+                                <option value="">Select Location</option>
+                                <option value="Kilimanoor">Kilimanoor (കിളിമാനൂർ)</option>
+                                <option value="Kottarakkara">Kottarakkara (കൊട്ടാരക്കര)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Date</label>
+                            <input type="date" id="date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Full Address</label>
+                            <textarea id="address" rows="3" placeholder="Street, City, Building..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Book Now</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Brochure Section -->
+    <!-- ShineXpress Family Section -->
+    <section id="shinexpress-family" class="family-section">
+        <div class="container">
+            <div class="family-card animate">
+                <div class="family-content">
+                    <h2>ShineXpress <span class="gradient-text">Family</span></h2>
+                    <p>Be a part of our journey. Click below to explore the ShineXpress Family portfolio, story, and exclusive updates on Canva.</p>
+                    <a href="https://shinexpressfamily31.my.canva.site/" class="btn btn-glass-primary" target="_blank" id="family-canva-btn">
+                        <i class="fas fa-users"></i> Visit ShineXpress Family
+                    </a>
+                </div>
+                <a href="https://shinexpressfamily31.my.canva.site/" class="family-icon-wrap" target="_blank" id="family-icon-link" aria-label="Visit ShineXpress Family on Canva">
+                    <i class="fas fa-users family-bg-icon"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="brochure" class="brochure-section">
+        <div class="container">
+            <div class="brochure-card animate">
+                <div class="brochure-content">
+                    <h2>Our <span class="gradient-text">Brochure</span></h2>
+                    <p>Explore our full range of premium car wash & detailing services, comprehensive packages, and pricing details. Download our official brochure PDF below.</p>
+                    <a href="https://intellectual-blush-tz6rh0rz.edgeone.app/Brochure%20ShineXpress%20(1).pdf" class="btn btn-glass-primary" target="_blank" download="Brochure_ShineXpress.pdf">
+                        <i class="fas fa-file-pdf"></i> Download Brochure
+                    </a>
+                </div>
+                <div class="brochure-icon-wrap">
+                    <i class="fas fa-file-pdf brochure-bg-icon"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo"><img src="assets/images/logo_3d.png" alt="Logo"></div>
+                    <p class="footer-desc">Trivandrum's premier doorstep car wash and detailing service. Experience luxury at your doorstep.</p>
+                    <div class="footer-socials">
+                        <a href="#" class="trigger-whatsapp-modal"><i class="fab fa-whatsapp"></i></a>
+                        <a href="https://www.instagram.com/shinexpress_3.1?igsh=MWdwNXVkYThrdHdveQ==" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#hero">Home</a></li>
+                        <li><a href="#services">Our Services</a></li>
+                        <li><a href="#why-us">About Us</a></li>
+                        <li><a href="#booking">Contact</a></li>
+                        <li><a href="#careers">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Popular Services</h4>
+                    <ul>
+						<li><a href="#services">Regular Standard Apex</a></li>
+						<li><a href="#services">Deluxe Valet</a></li>
+						<li><a href="#services">Seat Foam Deep Cleaning</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Get In Touch</h4>
+                    <p><i class="fas fa-location-dot"></i> Kilimanoor & Kottarakkara</p>
+                    <p><i class="fas fa-phone"></i> +91 88487 00790</p>
+                    <p><i class="fas fa-envelope"></i> shinexpress2025@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 ShineXpress Car Wash. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <a href="#" class="whatsapp-float trigger-whatsapp-modal">
+        <i class="fab fa-whatsapp"></i>
+        <span>Chat with us</span>
+    </a>
+
+    <!-- WhatsApp Contact Selection Modal -->
+    <div id="whatsappModal" class="wa-modal">
+        <div class="wa-modal-content animate">
+            <button class="wa-modal-close" id="closeWaModal" aria-label="Close modal">&times;</button>
+            <div class="wa-modal-header">
+                <i class="fab fa-whatsapp wa-logo-icon"></i>
+                <h3>Select Branch / സ്ഥലം തിരഞ്ഞെടുക്കുക</h3>
+                <p>Connect with our respective branch on WhatsApp to proceed</p>
+            </div>
+            <div class="wa-modal-body">
+                <a href="https://wa.me/918848900790" target="_blank" class="wa-branch-btn" id="waLinkKilimanoor">
+                    <span class="branch-phone">+91 88489 00790</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="https://wa.me/918848700790" target="_blank" class="wa-branch-btn" id="waLinkKottarakkara">
+                    <span class="branch-phone">+91 88487 00790</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        function selectPackage(val) {
+            document.getElementById('package').value = val;
+            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
